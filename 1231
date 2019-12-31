@@ -1,0 +1,199 @@
+css3新特性
+浏览器内核 Webkit            Gecko      Presto   Trident
+浏览器    safari chrome      Firefox    Opera      IE
+css3前缀  -webkit-          -moz-      -o-        -ms-
+--------------------------------------------------------
+添加圆角边框 border-radius
+左上角 border-top-left-radius
+右上角 border-top-right-radius
+左下角 border-bottom-left-radius
+右下角 border-bottom-right-radius
+举例： border-top-left-radius:40px 20px 即左上角椭圆边框，长轴40，短轴20
+       border-bottom-right-radius：20px 即右下角圆形，半径20
+---------------------------------------------------------
+阴影box-shadow
+inset 内部阴影
+outset 默认 外部阴影
+举例：box-shadow:10px 10px 5px #888
+      阴影部分向右 向下分别便宜10px，模糊的部分大小为5px，颜色为888
+----------------------------------------------------------
+文本文字
+text-shadow属性
+word-wrap属性
+@font-face规则
+1，text-shadow属性 水平偏移 垂直偏移 阴影大小 颜色
+举例：h1{text-shadow:2px 2px 8px #FF0000;}
+2,word-wrap属性，允许长单词，URL强制进行换行。
+可以设置为normal或者break-word，其中break-word为强制换行，排版布局更加美观
+3，@font-face规则，用来显示特殊字体
+将WEB字体，放在服务器上，需要时下载使用。
+不同浏览器支持支持的文件格式不同。
+字体文件格式 适用于浏览器
+.TTF .OTF    FIREFOX,SAFARI,OPERA
+.EOT         IE4
+.SVG         CHROME.IPHONE
+.WOFF        CHROME,FIREFOX
+注：生成需要格式的文件，可以登陆http://www.fontsquirrel.com/tools/webfont-
+使用时，需要建立fonts文件夹，然后将相应格式的文件放入文件夹中
+同时，在style中添加
+<style>
+@font-face{
+font-family:kastlerfont;                      /*定义字体名称
+src:url('fonts/kastler.ttf'),                 /*字体来源
+    url('fonts/kastler.eot'),
+    url('fonts/kastler.woff'),
+    url('fonts/kastler.svg');
+}
+p{
+ font-family:kastlerfont;                     /*引用字体
+ }
+ </style>
+-------------------------------------------------------------
+2D转换方法
+对元素进行旋转，缩放，移动，拉伸
+1，旋转 transform:rotate()
+格式 transform:rotate(XXdeg); 
+举例：
+div{
+   width:100px;
+   height:75px;
+   }
+   #rotateDiv
+   {
+   transform:rotate(30deg);
+   }
+<div id="container">
+       <div>web前端开发</div>
+       <div id="rotateDiv">web前端开发</div>
+</div>
+
+2,缩放，transform:scale()
+ 格式 transform:scale(x,y)
+ x表示水平方向缩放的倍数
+ y表示垂直方向缩放的倍数，若省略，同X
+ 0至1缩小，大于1放大
+ 举例：
+  .box:hover{
+  transform:scale(1.2);
+  }
+  鼠标悬停时，图片放大1.2倍
+----------------------------------------
+ 1， 过渡
+  transition属性，效果是使一个元素从一个状态，变化到另一个状态，发生两个状态之间的一个变化
+  包含如下子属性：
+  transition-property    属性名 表示对哪个属性进行变化
+  transition-duration    持续时间 用S表示
+  transition-timing-function   过渡使用的方法（函数）
+                               值                  描述
+                              
+                               linear              匀速
+                               ease                慢快慢
+                               ease-in             慢快
+                               ease-out            快慢
+                               ease-in-out         慢快慢
+  transition-dealy
+  
+  举例
+  div{
+      height:30px;
+      width:100px;
+      line-height:30px;
+      border-radius:5px;
+      color:grey;
+      background-color:silver;
+      transition:all 1s linear;
+      }
+      div:hover{
+      color:white;
+      background-color:green;
+      }
+      <div>web design</div>
+      效果：鼠标悬停时，又银底色黑字体变成绿底色白字体
+  
+  
+ 2,  动画效果
+ 使一个元素，通过animation属性，来完成若干种状态之间的一个转换
+ （1）定义动画
+  @keyframes规则
+  
+  @keyframes mycolor
+  {
+   0%{background-color:red;}
+   30%{background-color:blue;}
+   60%{background-color:yellow;}
+   100%{background-color:green;}
+  }
+  
+  div:hover
+  {
+   animation:mycolor 5s linear;       注：animation：动画名字 变化时间 变化函数
+  }
+  animation属性取值
+  值                                  描述
+  animation                           缩写
+  animation-name                      引用@keyframes动画的名称
+  animation-duration                  动画完成的时间
+  animation-timing-function           规定动画的速度曲线，默认是ease
+  animation-play-state                running|paused
+  --------------------------------------------------------------------
+  
+   3D变换
+   
+3D transform-style:preserve-3d
+旋转 transform rotateX()
+               rotateY()
+               rotateZ()    角度deg
+透视 perspective属性                                            /*设置后，会产生近大远小的效果
+
+父容器：旋转                                                    /*内容在父容器中，父容器在舞台中
+       transform-style:preserve-3d;
+       transform:rotateY(60deg);
+
+舞台：透视关系
+        perspective:100px                                       /* 眼睛到舞台的距离
+      
+
+案例：
+<div id="stage">
+      <div class="box x">
+               <img src="frog.jpg"/>
+      </div>
+      <div class="box y">
+                <img src="frog.jpg"/>
+      </div>         
+      <div class="box z">
+                 <img src="frog.jpg"/>
+      </div>
+</div>
+
+#stage{                                        /*舞台
+width:300px;
+margin:100px;
+perspective:100px;
+}
+.box{                                         /*父容器
+width:100px;
+height:100px;
+float:left;
+transition:linear 1s;
+transform-style:preserve-3d;
+}
+img{                                          /*图片
+ width:100px;
+ height:75px; 
+ }
+.x:hover{
+transform:rotateX(60deg);
+}
+.y:hover{
+transform:rotateY(60deg);
+}
+.z:hover{
+transform:rotateZ(60deg);
+}
+    
+    
+    
+    
+
+
